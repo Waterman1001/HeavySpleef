@@ -18,7 +18,7 @@
 package de.xaniox.heavyspleef.core.game;
 
 import com.google.common.collect.Lists;
-import com.sk89q.worldedit.BlockVector2D;
+import com.sk89q.worldedit.math.BlockVector2;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -37,13 +37,13 @@ public class Polygonal2DSpawnpointGenerator implements SpawnpointGenerator<Polyg
 
 	@Override
 	public void generateSpawnpoints(Polygonal2DRegion region, World world, List<Location> spawnpoints, int n) {
-		List<BlockVector2D> blockVectors = region.getPoints();
+		List<BlockVector2> blockVectors = region.getPoints();
 		List<PolygonPoint> points = Lists.newArrayList();
 		
 		int y = region.getMaximumY() + 1;
 		
 		for (int i = 0; i < blockVectors.size(); i++) {
-			BlockVector2D vector = blockVectors.get(i);
+			BlockVector2 vector = blockVectors.get(i);
 			
 			int x = vector.getBlockX();
 			int z = vector.getBlockZ();

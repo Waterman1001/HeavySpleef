@@ -19,8 +19,8 @@ package de.xaniox.heavyspleef.core.game;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.bukkit.BukkitUtil;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.Region;
 import de.xaniox.heavyspleef.core.HeavySpleef;
 import de.xaniox.heavyspleef.core.SimpleBasicTask;
@@ -38,7 +38,7 @@ import java.util.Set;
 
 public class LoseCheckerTask extends SimpleBasicTask implements SpleefListener {
 	
-	private static final Set<Material> FLOWING_MATERIALS = Sets.newHashSet(Material.WATER, Material.STATIONARY_WATER, Material.LAVA, Material.STATIONARY_LAVA);
+	private static final Set<Material> FLOWING_MATERIALS = Sets.newHashSet(Material.WATER, Material.LEGACY_STATIONARY_WATER, Material.LAVA, Material.LEGACY_STATIONARY_LAVA);
 	
 	private final GameManager gameManager;
 	private Map<SpleefPlayer, Location> recentLocations;
@@ -108,7 +108,7 @@ public class LoseCheckerTask extends SimpleBasicTask implements SpleefListener {
 		if (useLiquidDeathzone && FLOWING_MATERIALS.contains(location.getBlock().getType())) {
 			result = true;
 		} else {
-			Vector vec = BukkitUtil.toVector(location);
+			BlockVector3 vec = BukkitAdapter.asBlockVector(location);
 			
 			for (Region deathzone : game.getDeathzones().values()) {
 				if (deathzone.contains(vec)) {

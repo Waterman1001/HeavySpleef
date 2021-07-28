@@ -22,9 +22,7 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.EnumWrappers.Particle;
 import com.google.common.collect.Lists;
-import com.sk89q.worldedit.BlockVector;
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.bukkit.BukkitUtil;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.regions.iterator.RegionIterator;
 import de.xaniox.heavyspleef.core.MinecraftVersion;
@@ -45,6 +43,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.util.BlockVector;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
@@ -89,7 +88,7 @@ public class FlagShowBarriers extends IntegerFlag {
 		private final ProtocolManager manager;
 		private long currentTick;
 		private boolean calculated;
-		private List<Vector> spawningBarriers;
+		private List<BlockVector3> spawningBarriers;
 		private int currentIndex;
 		private int processPerInterval;
 		
@@ -127,7 +126,7 @@ public class FlagShowBarriers extends IntegerFlag {
 				}
 				
 				for (int i = currentIndex; i < currentIndex + processPerInterval && i < spawningBarriers.size(); i++) {
-					Vector vector = spawningBarriers.get(i);
+					BlockVector3 vector = spawningBarriers.get(i);
 					
 					spawnBarrier(vector);
 				}
@@ -151,21 +150,21 @@ public class FlagShowBarriers extends IntegerFlag {
 				RegionIterator iterator = new RegionIterator(region);
 				
 				while (iterator.hasNext()) {
-					BlockVector vector = iterator.next();
-					Location location = BukkitUtil.toLocation(game.getWorld(), vector);
+					BlockVector3 vector = iterator.next();
+					Location location = new Location(game.getWorld(), vector.getX(), vector.getY(), vector.getZ());
 					Block block = location.getBlock();
 					if (block.getType() != Material.BARRIER) {
 						continue;
 					}
 					
-					spawningBarriers.add(vector.add(0.5, 0.5, 0.5));
+					spawningBarriers.add(vector.add(1, 1, 1));
 				}
 			}
 			
 			Collections.shuffle(spawningBarriers);
 		}
 		
-		private void spawnBarrier(Vector vector) {
+		private void spawnBarrier(BlockVector3 vector) {
 			PacketContainer packet = manager.createPacket(PacketType.Play.Server.WORLD_PARTICLES);
 			packet.getParticles().write(0, Particle.BARRIER); //Particle itself
 			packet.getFloat().write(0, (float)vector.getX()); //x

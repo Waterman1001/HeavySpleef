@@ -41,7 +41,7 @@ import java.util.Map;
 public class FlagShovels extends BaseFlag {
 
 	private ItemStack createShovel() {
-		ItemStack shovelStack = new ItemStack(Material.DIAMOND_SPADE);
+		ItemStack shovelStack = new ItemStack(Material.DIAMOND_SHOVEL);
 		
 		ItemMeta meta = shovelStack.getItemMeta();
 		meta.setDisplayName(getI18N().getString(Messages.Player.SHOVEL));
@@ -84,7 +84,7 @@ public class FlagShovels extends BaseFlag {
 	public void onPlayerBreakBlock(PlayerBlockBreakEvent event) {
 		for (SpleefPlayer player : event.getGame().getPlayers()) {
 			ItemStack stack = player.getBukkitPlayer().getItemInHand();
-			if (stack.getType() != Material.DIAMOND_SPADE) {
+			if (stack.getType() != Material.DIAMOND_SHOVEL) {
 				continue;
 			}
 			

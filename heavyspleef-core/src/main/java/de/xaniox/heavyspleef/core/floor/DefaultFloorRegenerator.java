@@ -25,7 +25,6 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
-import com.sk89q.worldedit.world.registry.WorldData;
 
 public class DefaultFloorRegenerator implements FloorRegenerator {
 
@@ -35,11 +34,10 @@ public class DefaultFloorRegenerator implements FloorRegenerator {
 		
 		Region region = clipboard.getRegion();
 		World world = region.getWorld();
-		WorldData data = world.getWorldData();
 		
-		ClipboardHolder holder = new ClipboardHolder(clipboard, data);
+		ClipboardHolder holder = new ClipboardHolder(clipboard);
 		
-		Operation pasteOperation = holder.createPaste(session, data)
+		Operation pasteOperation = holder.createPaste(session)
 				.to(region.getMinimumPoint())
 				.ignoreAirBlocks(true)
 				.build();

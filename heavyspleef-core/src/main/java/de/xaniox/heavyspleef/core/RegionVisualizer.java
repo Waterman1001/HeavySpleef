@@ -18,7 +18,7 @@
 package de.xaniox.heavyspleef.core;
 
 import com.google.common.collect.Maps;
-import com.sk89q.worldedit.BlockVector;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.Region;
 import de.xaniox.heavyspleef.core.player.SpleefPlayer;
 import org.bukkit.Bukkit;
@@ -103,10 +103,10 @@ public class RegionVisualizer {
 				}
 				
 				finish = currentRepetitions > REPETITIONS;
-				Iterator<BlockVector> iterator = region.iterator();
+				Iterator<BlockVector3> iterator = region.iterator();
 				
 				while (iterator.hasNext()) {
-					BlockVector vec = iterator.next();
+					BlockVector3 vec = iterator.next();
 					
 					int x = vec.getBlockX();
 					int y = vec.getBlockY();
@@ -115,7 +115,7 @@ public class RegionVisualizer {
 					Location location = new Location(world, x, y, z);
 					
 					if (!finish) {
-						bukkitPlayer.sendBlockChange(location, Material.WOOL, data);
+						bukkitPlayer.sendBlockChange(location, Material.WHITE_WOOL, data);
 					} else {
 						Block block = world.getBlockAt(location);
 						

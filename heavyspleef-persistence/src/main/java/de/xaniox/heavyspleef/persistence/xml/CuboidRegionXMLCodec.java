@@ -17,7 +17,7 @@
  */
 package de.xaniox.heavyspleef.persistence.xml;
 
-import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import org.dom4j.Element;
 
@@ -25,8 +25,8 @@ public class CuboidRegionXMLCodec implements XMLRegionMetadataCodec<CuboidRegion
 
 	@Override
 	public void apply(Element applyTo, CuboidRegion region) {
-		Vector pos1 = region.getPos1();
-		Vector pos2 = region.getPos2();
+		BlockVector3 pos1 = region.getPos1();
+		BlockVector3 pos2 = region.getPos2();
 		
 		Element pos1Element = applyTo.addElement("pos1");
 		Element x1Element = pos1Element.addElement("x");
@@ -59,9 +59,9 @@ public class CuboidRegionXMLCodec implements XMLRegionMetadataCodec<CuboidRegion
 		int x2 = Integer.parseInt(pos2Element.elementText("x"));
 		int y2 = Integer.parseInt(pos2Element.elementText("y"));
 		int z2 = Integer.parseInt(pos2Element.elementText("z"));
-		
-		Vector pos1 = new Vector(x1, y1, z1);
-		Vector pos2 = new Vector(x2, y2, z2);
+
+		BlockVector3 pos1 = BlockVector3.at(x1, y1, z1);
+		BlockVector3 pos2 = BlockVector3.at(x2, y2, z2);
 		
 		return new CuboidRegion(pos1, pos2);
 	}

@@ -44,8 +44,7 @@ public class MaterialDataMatcher {
 		
 		if (material == null) {
 			try {
-				int id = Integer.parseInt(components[0]);
-				material = Material.getMaterial(id);
+				material = Material.getMaterial(components[0]);
 			} catch (NumberFormatException nfe) {
 				throw new IllegalArgumentException("\"" + components[0] + "\" is not a material");
 			}

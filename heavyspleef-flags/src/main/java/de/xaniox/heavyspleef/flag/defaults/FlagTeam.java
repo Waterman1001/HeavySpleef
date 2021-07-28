@@ -70,7 +70,7 @@ public class FlagTeam extends EnumListFlag<FlagTeam.TeamColor> {
 	};
 	private static final int OFFSET = 2;
 	
-	private static final MaterialData TEAM_SELECT_ITEMDATA = new MaterialData(Material.CLAY_BRICK);
+	private static final MaterialData TEAM_SELECT_ITEMDATA = new MaterialData(Material.BRICK);
 	private static final String TEAM_SELECT_ITEM_KEY = "team_select";
 	public static final String OBJECTIVE_NAME = "spleef_teams";
 	
@@ -739,7 +739,7 @@ public class FlagTeam extends EnumListFlag<FlagTeam.TeamColor> {
 			this.chatColor = chatColor;
 			this.legacyWoolData = (byte) legacyWoolData;
 			this.rgbColor = rgbColor;
-			this.woolData = new MaterialData(Material.WOOL, (byte)legacyWoolData);
+			this.woolData = new MaterialData(Material.WHITE_WOOL, (byte)legacyWoolData);
 		}
 		
 		public ChatColor getChatColor() {

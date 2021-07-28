@@ -20,8 +20,7 @@ package de.xaniox.leaderboardextensions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.FutureCallback;
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.bukkit.BukkitUtil;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 import de.xaniox.heavyspleef.commands.base.Command;
@@ -182,7 +181,7 @@ public class ExtensionLeaderboardWall extends GameExtension {
 				Block block = event.getClickedBlock();
 				
 				event.setCancelled(true);
-				if (block == null || block.getType() != Material.WALL_SIGN) {
+				if (block == null || block.getType() != Material.OAK_WALL_SIGN) {
 					addon.getI18n().getString(Messages.Command.BLOCK_NOT_A_SIGN);
 					return;
 				}
@@ -200,9 +199,9 @@ public class ExtensionLeaderboardWall extends GameExtension {
                         org.bukkit.util.Vector start = candidate.getStart();
 						org.bukkit.util.Vector end = candidate.getEnd();
 						
-						Vector startVec = BukkitUtil.toVector(start);
-						Vector endVec = BukkitUtil.toVector(end);
-						Vector blockVec = BukkitUtil.toVector(block);
+						BlockVector3 startVec = BlockVector3.at(start.getBlockX(), start.getBlockY(), start.getBlockZ());
+						BlockVector3 endVec = BlockVector3.at(end.getBlockX(), end.getBlockY(), end.getBlockZ());
+						BlockVector3 blockVec = BlockVector3.at(block.getX(), block.getY(), block.getZ());
 						
 						Region region = new CuboidRegion(startVec, endVec);
 						

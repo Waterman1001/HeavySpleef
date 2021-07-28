@@ -13,9 +13,8 @@
 			<url>http://maven.sk89q.com/repo</url>
 		</repository>
 		<repository>
-			<id>fawe-repo</id>
-			<name>fawe repository</name>
-			<url>http://ci.athion.net/job/FastAsyncWorldEdit/ws/mvn/</url>
+			<id>IntellectualSites</id>
+			<url>https://mvn.intellectualsites.com/content/groups/public/</url>
 		</repository>
 	</repositories>
 	<dependencies>
@@ -35,9 +34,10 @@
 			<version>R8-SNAPSHOT</version>
 		</dependency>
         <dependency>
-            <groupId>com.boydti</groupId>
-            <artifactId>fawe-api</artifactId>
-			<version>latest</version>
+			<groupId>com.fastasyncworldedit</groupId>
+			<artifactId>FAWE-Bukkit</artifactId>
+			<version>1.17-93</version>
+			<scope>provided</scope>
         </dependency>
 	</dependencies>
 </project>

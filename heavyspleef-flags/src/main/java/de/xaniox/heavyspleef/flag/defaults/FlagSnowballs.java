@@ -70,7 +70,7 @@ public class FlagSnowballs extends IntegerFlag {
 	public void onBlockBreak(PlayerBlockBreakEvent event) {
 		int val = getValue();
 		
-		ItemStack stack = new ItemStack(Material.SNOW_BALL, val);
+		ItemStack stack = new ItemStack(Material.SNOWBALL, val);
 		
 		SpleefPlayer player = event.getPlayer();
 		player.getBukkitPlayer().getInventory().addItem(stack);
@@ -123,7 +123,7 @@ public class FlagSnowballs extends IntegerFlag {
 		
 		blockHit.setType(Material.AIR);
 		if (game.getPropertyValue(GameProperty.PLAY_BLOCK_BREAK)) {
-			blockHit.getWorld().playEffect(blockHit.getLocation(), Effect.STEP_SOUND, blockHit.getTypeId());
+			blockHit.getWorld().playEffect(blockHit.getLocation(), Effect.STEP_SOUND, blockHit.getType());
 		}
 	}
 

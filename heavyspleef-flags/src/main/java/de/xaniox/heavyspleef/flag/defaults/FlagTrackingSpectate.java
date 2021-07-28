@@ -157,7 +157,7 @@ public class FlagTrackingSpectate extends BaseFlag {
 					continue;
 				}
 				
-				MaterialData data = new MaterialData(Material.SKULL_ITEM, (byte)SkullType.PLAYER.ordinal());
+				MaterialData data = new MaterialData(Material.LEGACY_SKULL_ITEM, (byte)SkullType.PLAYER.ordinal());
 				ItemStack skull = data.toItemStack(1);
 				SkullMeta meta = (SkullMeta) skull.getItemMeta();
 				meta.setDisplayName(getI18N().getVarString(Messages.Player.TRACKER_SKULL_TITLE)

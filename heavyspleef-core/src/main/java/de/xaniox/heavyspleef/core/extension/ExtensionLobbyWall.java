@@ -19,7 +19,7 @@ package de.xaniox.heavyspleef.core.extension;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.sk89q.worldedit.bukkit.BukkitUtil;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 import de.xaniox.heavyspleef.commands.base.*;
@@ -88,7 +88,7 @@ public class ExtensionLobbyWall extends GameExtension {
 				Game game = (Game) cookie;
 				
 				Block clickedBlock = event.getClickedBlock();
-				if (clickedBlock.getType() != Material.WALL_SIGN) {
+				if (clickedBlock.getType() != Material.OAK_WALL_SIGN) {
 					player.sendMessage(i18n.getString(Messages.Command.BLOCK_NOT_A_SIGN));
 					return;
 				}
@@ -141,7 +141,7 @@ public class ExtensionLobbyWall extends GameExtension {
 				Game game = (Game) cookie;
 				Block clickedBlock = event.getClickedBlock();
 				
-				if (clickedBlock.getType() != Material.WALL_SIGN) {
+				if (clickedBlock.getType() != Material.OAK_WALL_SIGN) {
 					player.sendMessage(i18n.getString(Messages.Command.BLOCK_NOT_A_SIGN));
 					return;
 				}
@@ -154,9 +154,9 @@ public class ExtensionLobbyWall extends GameExtension {
 					Vector start = candidate.getStart();
 					Vector end = candidate.getEnd();
 
-					com.sk89q.worldedit.Vector startVec = BukkitUtil.toVector(start);
-					com.sk89q.worldedit.Vector endVec = BukkitUtil.toVector(end);
-					com.sk89q.worldedit.Vector blockVec = BukkitUtil.toVector(clickedBlock);
+					BlockVector3 startVec = BlockVector3.at(start.getBlockX(), start.getBlockY(), start.getBlockZ());
+					BlockVector3 endVec = BlockVector3.at(end.getBlockX(), end.getBlockY(), end.getBlockZ());
+					BlockVector3 blockVec = BlockVector3.at(clickedBlock.getX(), clickedBlock.getY(), clickedBlock.getZ());
 					
 					Region region = new CuboidRegion(startVec, endVec);
 					
@@ -246,7 +246,7 @@ public class ExtensionLobbyWall extends GameExtension {
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		SpleefPlayer player = heavySpleef.getSpleefPlayer(event.getPlayer());
 		Block clicked = event.getClickedBlock();
-		if (clicked == null || (clicked.getType() != Material.WALL_SIGN && clicked.getType() != Material.SIGN_POST)) {
+		if (clicked == null || (clicked.getType() != Material.OAK_WALL_SIGN && clicked.getType() != Material.OAK_SIGN)) {
 			return;
 		}
 		
@@ -412,7 +412,7 @@ public class ExtensionLobbyWall extends GameExtension {
 			
 			while (true) {
 				Block leftBlock = lastBlock.getRelative(leftFace);
-				if (leftBlock.getType() != Material.WALL_SIGN) {
+				if (leftBlock.getType() != Material.OAK_WALL_SIGN) {
 					break;
 				}
 				
@@ -425,7 +425,7 @@ public class ExtensionLobbyWall extends GameExtension {
 			
 			while (true) {
 				Block rightBlock = lastBlock.getRelative(rightFace);
-				if (rightBlock.getType() != Material.WALL_SIGN) {
+				if (rightBlock.getType() != Material.OAK_WALL_SIGN) {
 					break;
 				}
 				
@@ -504,7 +504,7 @@ public class ExtensionLobbyWall extends GameExtension {
 			for (int i = 0; iterator.hasNext(); i++) {
 				Block block = iterator.next();
 				
-				if (block.getType() != Material.WALL_SIGN) {
+				if (block.getType() != Material.OAK_WALL_SIGN) {
 					continue;
 				}
 

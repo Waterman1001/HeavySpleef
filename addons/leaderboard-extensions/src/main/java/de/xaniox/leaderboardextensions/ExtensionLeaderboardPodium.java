@@ -264,12 +264,12 @@ public class ExtensionLeaderboardPodium extends GameExtension {
 			case 3:
 				//Second left
 				position = baseBlock.getRelative(leftFace, 2);
-				type = Material.DOUBLE_STEP;
+				type = Material.LEGACY_DOUBLE_STEP;
 				break;
 			case 4:
 				//Second right
 				position = baseBlock.getRelative(rightFace, 2);
-				type = Material.DOUBLE_STEP;
+				type = Material.LEGACY_DOUBLE_STEP;
 				break;
 			}
 			
@@ -288,7 +288,7 @@ public class ExtensionLeaderboardPodium extends GameExtension {
 			}
 			
 			if (baseBlock.getType() == Material.AIR || forceBlocks) {
-				baseBlock.setType(Material.DOUBLE_STEP);
+				baseBlock.setType(Material.LEGACY_DOUBLE_STEP);
 			}
 			
 			if (position.getType() == Material.AIR || forceBlocks) {
@@ -300,8 +300,8 @@ public class ExtensionLeaderboardPodium extends GameExtension {
 			}
 			
 			/* For legacy reasons and compatibility */
-			signBlock.setTypeId(Material.WALL_SIGN.getId(), false);
-			skullBlock.setTypeId(Material.SKULL.getId(), false);
+			signBlock.setType(Material.OAK_WALL_SIGN, false);
+			skullBlock.setType(Material.LEGACY_SKULL, false);
 			
 			Skull skull = (Skull) skullBlock.getState();
 			skull.setRotation(direction.getBlockFace3D());
@@ -318,7 +318,7 @@ public class ExtensionLeaderboardPodium extends GameExtension {
 			variables.add(new Variable("rank", i + 1));
 			
 			layout.inflate(sign, variables);
-			org.bukkit.material.Sign data = new org.bukkit.material.Sign(Material.WALL_SIGN);
+			org.bukkit.material.Sign data = new org.bukkit.material.Sign(Material.OAK_WALL_SIGN);
 			data.setFacingDirection(direction.getBlockFace3D());
 			sign.setData(data);
 			sign.update();

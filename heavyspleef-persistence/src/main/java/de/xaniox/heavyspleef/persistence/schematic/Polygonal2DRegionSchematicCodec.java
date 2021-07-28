@@ -21,7 +21,7 @@ import com.google.common.collect.Lists;
 import com.sk89q.jnbt.IntTag;
 import com.sk89q.jnbt.ListTag;
 import com.sk89q.jnbt.Tag;
-import com.sk89q.worldedit.BlockVector2D;
+import com.sk89q.worldedit.math.BlockVector2;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
 
 import java.util.List;
@@ -31,12 +31,12 @@ public class Polygonal2DRegionSchematicCodec implements SchematicRegionMetadataC
 
 	@Override
 	public void apply(Map<String, Tag> tags, Polygonal2DRegion region) {
-		List<BlockVector2D> points = region.getPoints();
+		List<BlockVector2> points = region.getPoints();
 		int minY = region.getMinimumY();
 		int maxY = region.getMaximumY();
 		
 		List<ListTag> pointList = Lists.newArrayList();
-		for (BlockVector2D vector : points) {
+		for (BlockVector2 vector : points) {
 			List<IntTag> vectorList = Lists.newArrayList();
 			vectorList.add(new IntTag(vector.getBlockX()));
 			vectorList.add(new IntTag(vector.getBlockZ()));
@@ -56,7 +56,7 @@ public class Polygonal2DRegionSchematicCodec implements SchematicRegionMetadataC
 	public Polygonal2DRegion asRegion(Map<String, Tag> tags) {
 		ListTag pointsListTag = (ListTag) tags.get("points");
 		List<Tag> pointList = pointsListTag.getValue();
-		List<BlockVector2D> points = Lists.newArrayList();
+		List<BlockVector2> points = Lists.newArrayList();
 		
 		for (Tag vectorTag : pointList) {
 			if (!(vectorTag instanceof ListTag)) {
@@ -67,7 +67,7 @@ public class Polygonal2DRegionSchematicCodec implements SchematicRegionMetadataC
 			int x = vectorListTag.getInt(0);
 			int z = vectorListTag.getInt(1);
 			
-			BlockVector2D vector = new BlockVector2D(x, z);
+			BlockVector2 vector = BlockVector2.at(x, z);
 			points.add(vector);
 		}
 		
@@ -75,7 +75,7 @@ public class Polygonal2DRegionSchematicCodec implements SchematicRegionMetadataC
 		int maxY = (int) tags.get("maxY").getValue();
 		
 		Polygonal2DRegion region = new Polygonal2DRegion();
-		for (BlockVector2D point : points) {
+		for (BlockVector2 point : points) {
 			region.addPoint(point);
 		}
 		

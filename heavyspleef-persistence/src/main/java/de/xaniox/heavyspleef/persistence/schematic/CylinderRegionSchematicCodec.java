@@ -21,9 +21,10 @@ import com.google.common.collect.Lists;
 import com.sk89q.jnbt.IntTag;
 import com.sk89q.jnbt.ListTag;
 import com.sk89q.jnbt.Tag;
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.Vector2D;
+import com.sk89q.worldedit.math.BlockVector2;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CylinderRegion;
+import org.bukkit.block.Block;
 
 import java.util.List;
 import java.util.Map;
@@ -32,8 +33,8 @@ public class CylinderRegionSchematicCodec implements SchematicRegionMetadataCode
 
 	@Override
 	public void apply(Map<String, Tag> tags, CylinderRegion region) {
-		Vector center = region.getCenter();
-		Vector2D radius = region.getRadius();
+		BlockVector3 center = region.getCenter().toBlockPoint();
+		BlockVector2 radius = region.getRadius().toBlockPoint();
 		int minY = region.getMinimumY();
 		int maxY = region.getMaximumY();
 		
@@ -68,12 +69,12 @@ public class CylinderRegionSchematicCodec implements SchematicRegionMetadataCode
 		int pos2X = radiusTag.getInt(0);
 		int pos2Z = radiusTag.getInt(1);
 		
-		Vector center = new Vector(centerX, centerY, centerZ);
-		Vector2D radius = new Vector2D(pos2X, pos2Z);
+		BlockVector3 center = BlockVector3.at(centerX, centerY, centerZ);
+		BlockVector2 radius = BlockVector2.at(pos2X, pos2Z);
 		int minY = (int) tags.get("minY").getValue();
 		int maxY = (int) tags.get("maxY").getValue();
 		
-		return new CylinderRegion(center, radius, minY, maxY);
+		return new CylinderRegion(center, radius.toVector2(), minY, maxY);
 	}
 
 }

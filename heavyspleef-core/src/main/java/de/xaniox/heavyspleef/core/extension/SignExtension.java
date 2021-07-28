@@ -82,7 +82,7 @@ public abstract class SignExtension extends GameExtension {
 	
 	public void updateSign() {
 		Block block = location.getWorld().getBlockAt(location);
-		if (block.getType() != Material.SIGN_POST && block.getType() != Material.WALL_SIGN) {
+		if (block.getType() != Material.OAK_SIGN && block.getType() != Material.OAK_WALL_SIGN) {
 			return;
 		}
 		
@@ -156,7 +156,7 @@ public abstract class SignExtension extends GameExtension {
 			return;
 		}
 		
-		if (clickedBlock.getType() != Material.SIGN_POST && clickedBlock.getType() != Material.WALL_SIGN) {
+		if (clickedBlock.getType() != Material.OAK_SIGN && clickedBlock.getType() != Material.OAK_WALL_SIGN) {
 			return;
 		}
 		

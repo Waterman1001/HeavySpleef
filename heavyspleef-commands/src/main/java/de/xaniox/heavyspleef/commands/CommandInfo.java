@@ -17,7 +17,7 @@
  */
 package de.xaniox.heavyspleef.commands;
 
-import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.CylinderRegion;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
@@ -35,6 +35,7 @@ import de.xaniox.heavyspleef.core.i18n.I18N;
 import de.xaniox.heavyspleef.core.i18n.I18NManager;
 import de.xaniox.heavyspleef.core.i18n.Messages;
 import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -96,8 +97,8 @@ public class CommandInfo {
 
 		for (Floor floor : floors) {
 			Region region = floor.getRegion();
-			Vector minPos = region.getMinimumPoint();
-			Vector maxPos = region.getMaximumPoint();
+			BlockVector3 minPos = region.getMinimumPoint();
+			BlockVector3 maxPos = region.getMaximumPoint();
 
 			builder.append(ChatColor.GOLD + "| ")
 					.append(ChatColor.DARK_GRAY + " - " + ChatColor.YELLOW + floor.getName() + ": " + getRegionTypeName(region) + " " + vectorAsString(minPos)
@@ -111,8 +112,8 @@ public class CommandInfo {
 			String name = entry.getKey();
 			Region region = entry.getValue();
 			
-			Vector minPos = region.getMinimumPoint();
-			Vector maxPos = region.getMaximumPoint();
+			BlockVector3 minPos = region.getMinimumPoint();
+			BlockVector3 maxPos = region.getMaximumPoint();
 
 			builder.append(ChatColor.GOLD + "| ")
 					.append(ChatColor.DARK_GRAY + " - " + ChatColor.YELLOW + name + ": " + getRegionTypeName(region) + ", " + vectorAsString(minPos)
@@ -146,7 +147,7 @@ public class CommandInfo {
 		return regionType;
 	}
 	
-	private String vectorAsString(Vector vector) {
+	private String vectorAsString(BlockVector3 vector) {
 		StringBuilder builder = new StringBuilder();
 		
 		builder.append('(');

@@ -17,7 +17,7 @@
  */
 package de.xaniox.heavyspleef.core.game;
 
-import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -28,8 +28,8 @@ public class CuboidSpawnpointGenerator implements SpawnpointGenerator<CuboidRegi
 
 	@Override
 	public void generateSpawnpoints(CuboidRegion region, World world, List<Location> spawnpoints, int n) {
-		Vector min = region.getMinimumPoint();
-		Vector max = region.getMaximumPoint();
+		BlockVector3 min = region.getMinimumPoint();
+		BlockVector3 max = region.getMaximumPoint();
 		
 		int dx = max.getBlockX() - min.getBlockX();
 		int dz = max.getBlockZ() - min.getBlockZ();

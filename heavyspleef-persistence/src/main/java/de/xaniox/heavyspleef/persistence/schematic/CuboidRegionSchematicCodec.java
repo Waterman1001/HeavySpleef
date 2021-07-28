@@ -21,7 +21,7 @@ import com.google.common.collect.Lists;
 import com.sk89q.jnbt.IntTag;
 import com.sk89q.jnbt.ListTag;
 import com.sk89q.jnbt.Tag;
-import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 
 import java.util.List;
@@ -31,8 +31,8 @@ public class CuboidRegionSchematicCodec implements SchematicRegionMetadataCodec<
 
 	@Override
 	public void apply(Map<String, Tag> tags, CuboidRegion region) {
-		Vector pos1 = region.getPos1();
-		Vector pos2 = region.getPos2();
+		BlockVector3 pos1 = region.getPos1();
+		BlockVector3 pos2 = region.getPos2();
 		
 		List<IntTag> pos1List = Lists.newArrayList();
 		pos1List.add(new IntTag(pos1.getBlockX()));
@@ -64,9 +64,9 @@ public class CuboidRegionSchematicCodec implements SchematicRegionMetadataCodec<
 		int pos2X = pos2Tag.getInt(0);
 		int pos2Y = pos2Tag.getInt(1);
 		int pos2Z = pos2Tag.getInt(2);
-		
-		Vector pos1 = new Vector(pos1X, pos1Y, pos1Z);
-		Vector pos2 = new Vector(pos2X, pos2Y, pos2Z);
+
+		BlockVector3 pos1 = BlockVector3.at(pos1X, pos1Y, pos1Z);
+		BlockVector3 pos2 = BlockVector3.at(pos2X, pos2Y, pos2Z);
 		
 		return new CuboidRegion(pos1, pos2);
 	}

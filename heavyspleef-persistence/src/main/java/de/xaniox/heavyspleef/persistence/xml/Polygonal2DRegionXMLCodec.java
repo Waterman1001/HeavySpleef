@@ -18,7 +18,7 @@
 package de.xaniox.heavyspleef.persistence.xml;
 
 import com.google.common.collect.Lists;
-import com.sk89q.worldedit.BlockVector2D;
+import com.sk89q.worldedit.math.BlockVector2;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
 import com.sk89q.worldedit.world.World;
 import org.dom4j.Element;
@@ -29,12 +29,12 @@ public class Polygonal2DRegionXMLCodec implements XMLRegionMetadataCodec<Polygon
 
 	@Override
 	public void apply(Element applyTo, Polygonal2DRegion region) {
-		List<BlockVector2D> points = region.getPoints();
+		List<BlockVector2> points = region.getPoints();
 		int minY = region.getMinimumY();
 		int maxY = region.getMaximumY();
 		
 		Element pointsElement = applyTo.addElement("points");
-		for (BlockVector2D point : points) {
+		for (BlockVector2 point : points) {
 			Element pointElement = pointsElement.addElement("point");
 			
 			pointElement.addElement("x").addText(String.valueOf(point.getBlockX()));
@@ -53,13 +53,13 @@ public class Polygonal2DRegionXMLCodec implements XMLRegionMetadataCodec<Polygon
 		Element maxYElement = container.element("maxY");
 		
 		List<Element> pointElementList = pointsElement.elements("point");
-		List<BlockVector2D> points = Lists.newArrayList();
+		List<BlockVector2> points = Lists.newArrayList();
 		
 		for (Element pointElement : pointElementList) {
 			int x = Integer.parseInt(pointElement.elementText("x"));
 			int z = Integer.parseInt(pointElement.elementText("z"));
 			
-			BlockVector2D point = new BlockVector2D(x, z);
+			BlockVector2 point = BlockVector2.at(x, z);
 			points.add(point);
 		}
 		

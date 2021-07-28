@@ -18,16 +18,14 @@
 package de.xaniox.heavyspleef.core.floor;
 
 import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.WorldEditException;
-import com.sk89q.worldedit.bukkit.BukkitUtil;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.session.ClipboardHolder;
-import com.sk89q.worldedit.world.World;
-import com.sk89q.worldedit.world.registry.WorldData;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
@@ -63,8 +61,7 @@ public class SimpleClipboardFloor implements Floor {
 	
 	@Override
 	public boolean contains(Location location) {
-		Vector pt = BukkitUtil.toVector(location);
-		
+		BlockVector3 pt = BukkitAdapter.asBlockVector(location);
 		return floorClipboard.getRegion().contains(pt);
 	}
 
@@ -72,12 +69,10 @@ public class SimpleClipboardFloor implements Floor {
 	@Deprecated
 	public void generate(EditSession session) {
 		Region region = floorClipboard.getRegion();
-		World world = region.getWorld();
-		WorldData data = world.getWorldData();
 		
-		ClipboardHolder holder = new ClipboardHolder(floorClipboard, data);
+		ClipboardHolder holder = new ClipboardHolder(floorClipboard);
 		
-		Operation pasteOperation = holder.createPaste(session, data)
+		Operation pasteOperation = holder.createPaste(session)
 				.to(region.getMinimumPoint())
 				.ignoreAirBlocks(true)
 				.build();

@@ -19,13 +19,14 @@ package de.xaniox.heavyspleef.flag.defaults;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEditException;
-import com.sk89q.worldedit.blocks.BaseBlock;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.world.World;
+import com.sk89q.worldedit.world.block.BaseBlock;
+import com.sk89q.worldedit.world.block.BlockState;
 import de.xaniox.heavyspleef.core.flag.Flag;
 import de.xaniox.heavyspleef.core.flag.Inject;
 import de.xaniox.heavyspleef.core.floor.Floor;
@@ -94,17 +95,17 @@ public class FlagRegenPercentage extends IntegerFlag {
 			
 			int notRegenerating = area - (int) (percentage * area);
 			
-			Iterator<BlockVector> iterator = region.iterator();
-			List<BlockVector> vectors = Lists.newArrayList();
-			Map<BlockVector, BaseBlock> clipboardBlockCache = Maps.newHashMap();
+			Iterator<BlockVector3> iterator = region.iterator();
+			List<BlockVector3> vectors = Lists.newArrayList();
+			Map<BlockVector3, BaseBlock> clipboardBlockCache = Maps.newHashMap();
 			Clipboard clipboard = floor.getClipboard();
 			
 			while (iterator.hasNext()) {
-				BlockVector vector = iterator.next();
-				BaseBlock block = clipboard.getLazyBlock(vector);
+				BlockVector3 vector = iterator.next();
+				BaseBlock block = clipboard.getFullBlock(vector);
 				clipboardBlockCache.put(vector, block);
 				
-				if (block.getType() == AIR_ID) {
+				if (block.getBlockType().getLegacyId() == AIR_ID) {
 					continue;
 				}
 				
@@ -120,14 +121,14 @@ public class FlagRegenPercentage extends IntegerFlag {
 			
 			try {
 				//Iterate over all remaining block vectors and regenerate these blocks
-				for (BlockVector regeneratingBlock : vectors) {
+				for (BlockVector3 regeneratingBlock : vectors) {
 					BaseBlock clipboardBlock = clipboardBlockCache.get(regeneratingBlock);
-					BaseBlock worldBlock = world.getBlock(regeneratingBlock);
+					BlockState worldBlock = world.getBlock(regeneratingBlock);
 					
-					int id = clipboardBlock.getId();
-					int data = clipboardBlock.getData();
-					
-					worldBlock.setIdAndData(id, data);
+					int id = clipboardBlock.getBlockType().getLegacyId();
+					int data = clipboardBlock.getBlockType().getLegacyData();
+
+//					worldBlock.setIdAndData(id, data);
 					world.setBlock(regeneratingBlock, worldBlock);
 				}
 			} catch (WorldEditException e) {

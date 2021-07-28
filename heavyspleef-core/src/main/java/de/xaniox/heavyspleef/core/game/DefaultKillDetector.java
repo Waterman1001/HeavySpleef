@@ -18,8 +18,8 @@
 package de.xaniox.heavyspleef.core.game;
 
 import com.google.common.collect.BiMap;
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.bukkit.BukkitUtil;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.FlatRegion;
 import com.sk89q.worldedit.regions.Region;
 import de.xaniox.heavyspleef.core.floor.Floor;
@@ -37,7 +37,7 @@ public class DefaultKillDetector implements KillDetector {
 	@Override
 	public SpleefPlayer detectKiller(Game game, SpleefPlayer deadPlayer) {
 		Location location = deadPlayer.getBukkitPlayer().getLocation();
-		Vector playerVector = BukkitUtil.toVector(location);
+		BlockVector3 playerVector = BukkitAdapter.asBlockVector(location);
 		
 		Floor nearestFloor = null;
 		int currentDistance = 0;
@@ -47,7 +47,7 @@ public class DefaultKillDetector implements KillDetector {
 			Region region = floor.getRegion();
 			
 			int minY = region instanceof FlatRegion ? ((FlatRegion)region).getMinimumY() : region.getMinimumPoint().getBlockY();
-			Vector fakeYVector = new Vector(playerVector.getBlockX(), minY, playerVector.getBlockZ());
+			BlockVector3 fakeYVector = BlockVector3.at(playerVector.getBlockX(), minY, playerVector.getBlockZ());
 			
 			if (!region.contains(fakeYVector)) {
 				//Player is not above or under the 2D region
@@ -55,7 +55,7 @@ public class DefaultKillDetector implements KillDetector {
 				continue;
 			}
 			
-			Vector maxPoint = region.getMaximumPoint();			
+			BlockVector3 maxPoint = region.getMaximumPoint();
 			int maxY = maxPoint.getBlockY();
 			
 			int minDistance = minY - location.getBlockY();

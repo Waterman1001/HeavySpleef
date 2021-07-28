@@ -10,7 +10,7 @@
 	<inceptionYear>2014-2016</inceptionYear>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<worldedit.version>6.0.0-SNAPSHOT</worldedit.version>
+		<worldedit.version>7.2.5-SNAPSHOT</worldedit.version>
 		<package.librarybase>de.xaniox.heavyspleef.lib</package.librarybase>
 		<build.number>UNKNOWN</build.number>
         <project.developer>Matthias Werning</project.developer>
@@ -244,9 +244,9 @@
 			<url>http://nexus.hc.to/content/repositories/pub_releases</url>
 		</repository>
 		<repository>
-			<id>sk89q-repo</id>
+			<id>enginehub-maven</id>
 			<name>sk89q's repository</name>
-			<url>http://maven.sk89q.com/repo</url>
+			<url>https://maven.enginehub.org/repo/</url>
 		</repository>
 		<repository>
 			<id>dmulloy2-repo</id>
@@ -262,7 +262,7 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.11-R0.1-SNAPSHOT</version>
+			<version>1.17.1-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -291,7 +291,7 @@
 		<dependency>
 			<groupId>com.comphenix.protocol</groupId>
 			<artifactId>ProtocolLib</artifactId>
-			<version>3.6.4</version>
+			<version>4.7.0</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

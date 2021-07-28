@@ -20,10 +20,10 @@ package de.xaniox.heavyspleef.core.game;
 import com.google.common.collect.*;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.EditSessionFactory;
-import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.WorldEdit;
-import com.sk89q.worldedit.bukkit.BukkitUtil;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.math.Vector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.CylinderRegion;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
@@ -1193,12 +1193,12 @@ public class Game implements VariableSuppliable {
 			if (iterator.hasNext()) {
 				Floor floor = iterator.next();
 				
-				Vector center = floor.getRegion().getCenter();
+				Vector3 center = floor.getRegion().getCenter();
 				int broadcastRadius = getPropertyValue(GameProperty.BROADCAST_RADIUS);
 				
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					SpleefPlayer spleefPlayer = heavySpleef.getSpleefPlayer(player);
-					Vector playerVec = BukkitUtil.toVector(player.getLocation());
+					Vector3 playerVec = BukkitAdapter.asVector(player.getLocation());
 					
 					double distanceSq = center.distanceSq(playerVec);
 					if (distanceSq <= Math.pow(broadcastRadius, 2) || isIngame(spleefPlayer)
@@ -1225,7 +1225,6 @@ public class Game implements VariableSuppliable {
 	}
 	
 	/* Event hooks */
-	@SuppressWarnings("deprecation")
 	public void onPlayerInteract(PlayerInteractEvent event, SpleefPlayer player) {
 		Block block = event.getClickedBlock();
 		Action action = event.getAction();
@@ -1262,12 +1261,12 @@ public class Game implements VariableSuppliable {
 				if (breakEvent.isCancelled()) {
 					return;
 				}
-				
+
 				Material blockMaterial = block.getType();
 				block.setType(Material.AIR);
 				
 				if (playBreakEffect) {
-					block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, blockMaterial.getId());
+					block.getWorld().playSound(block.getLocation(), Sound.BLOCK_SNOW_STEP, 1, 1);
 				}
 				
 				addBlockBroken(player, block);

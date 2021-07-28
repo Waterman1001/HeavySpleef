@@ -17,11 +17,13 @@
  */
 package de.xaniox.heavyspleef.core.floor;
 
-import com.boydti.fawe.object.schematic.Schematic;
 import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.WorldEditException;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
-import com.sk89q.worldedit.math.transform.Transform;
+import com.sk89q.worldedit.function.operation.Operation;
+import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.regions.Region;
+import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
 
 public class FAWEFloorRegenerator implements FloorRegenerator {
@@ -29,15 +31,25 @@ public class FAWEFloorRegenerator implements FloorRegenerator {
     @Override
     public void regenerate(Floor floor, EditSession session, RegenerationCause cause) {
         Clipboard clipboard = floor.getClipboard();
-        Schematic faweSchematic = new Schematic(clipboard);
-
         Region region = clipboard.getRegion();
         World world = region.getWorld();
+
         if (world == null) {
             throw new IllegalStateException("World of floor " + floor.getName() + " is null!");
         }
 
-        faweSchematic.paste(world, region.getMinimumPoint(), false, false, (Transform) null);
+        ClipboardHolder holder = new ClipboardHolder(clipboard);
+
+        Operation pasteOperation = holder.createPaste(session)
+                .to(region.getMinimumPoint())
+                .ignoreAirBlocks(true)
+                .build();
+
+        try {
+            Operations.complete(pasteOperation);
+        } catch (WorldEditException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

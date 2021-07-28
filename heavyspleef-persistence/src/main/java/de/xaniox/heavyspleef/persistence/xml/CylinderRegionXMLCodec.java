@@ -17,17 +17,18 @@
  */
 package de.xaniox.heavyspleef.persistence.xml;
 
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.Vector2D;
+import com.sk89q.worldedit.math.BlockVector2;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CylinderRegion;
+import org.bukkit.block.Block;
 import org.dom4j.Element;
 
 public class CylinderRegionXMLCodec implements XMLRegionMetadataCodec<CylinderRegion> {
 
 	@Override
 	public void apply(Element applyTo, CylinderRegion region) {
-		Vector center = region.getCenter();
-		Vector2D radius = region.getRadius();
+		BlockVector3 center = region.getCenter().toBlockPoint();
+		BlockVector2 radius = region.getRadius().toBlockPoint();
 		int minY = region.getMinimumY();
 		int maxY = region.getMaximumY();
 		
@@ -61,10 +62,10 @@ public class CylinderRegionXMLCodec implements XMLRegionMetadataCodec<CylinderRe
 		int minY = Integer.parseInt(minYElement.getText());
 		int maxY = Integer.parseInt(maxYElement.getText());
 		
-		Vector center = new Vector(cx, cy, cz);
-		Vector2D radius = new Vector2D(rx, rz);
+		BlockVector3 center = BlockVector3.at(cx, cy, cz);
+		BlockVector2 radius = BlockVector2.at(rx, rz);
 		
-		return new CylinderRegion(center, radius, minY, maxY);
+		return new CylinderRegion(center, radius.toVector2(), minY, maxY);
 	}
 
 }

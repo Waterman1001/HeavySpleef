@@ -19,10 +19,10 @@ package de.xaniox.heavyspleef.migration;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.bukkit.BukkitUtil;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.extent.clipboard.BlockArrayClipboard;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 import de.xaniox.heavyspleef.core.HeavySpleef;
@@ -190,8 +190,8 @@ public class GameMigrator implements Migrator<Configuration, File> {
 				Region region;
 				
 				if (shape.equals("CUBOID")) {
-					Vector first = legacyStringToVector(floorSection.getString("first"));
-					Vector second = legacyStringToVector(floorSection.getString("second"));
+					BlockVector3 first = legacyStringToVector(floorSection.getString("first"));
+					BlockVector3 second = legacyStringToVector(floorSection.getString("second"));
 					
 					region = new CuboidRegion(first, second);
 				} else if (shape.equals("CYLINDER")) {
@@ -216,8 +216,8 @@ public class GameMigrator implements Migrator<Configuration, File> {
 				ConfigurationSection losezoneSection = losezonesSection.getConfigurationSection(losezoneKey);
 				String id = "deathzone_" + losezoneSection.getString("id");
 				
-				Vector first = legacyStringToVector(losezoneSection.getString("first"));
-				Vector second = legacyStringToVector(losezoneSection.getString("second"));
+				BlockVector3 first = legacyStringToVector(losezoneSection.getString("first"));
+				BlockVector3 second = legacyStringToVector(losezoneSection.getString("second"));
 				Region region = new CuboidRegion(first, second);
 				
 				game.addDeathzone(id, region);
@@ -339,9 +339,9 @@ public class GameMigrator implements Migrator<Configuration, File> {
 		return new Location(world, x, y, z, yaw, pitch);
 	}
 	
-	private Vector legacyStringToVector(String legacyString) {
+	private BlockVector3 legacyStringToVector(String legacyString) {
 		Location location = legacyStringToLocation(legacyString);
-		return BukkitUtil.toVector(location);
+		return BukkitAdapter.asBlockVector(location);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -401,7 +401,7 @@ public class GameMigrator implements Migrator<Configuration, File> {
 		} else if (expected == ItemStack.class) {
 			String[] itemStackComponents = valueString.split("-");
 			
-			int id = Integer.parseInt(itemStackComponents[0]);
+			Material id = Material.getMaterial(itemStackComponents[0]);
 			byte data = 0;
 			int amount = 1;
 			

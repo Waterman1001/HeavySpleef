@@ -19,7 +19,6 @@ package de.xaniox.heavyspleef.flag.presets;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.sk89q.worldedit.blocks.ItemType;
 import de.xaniox.heavyspleef.core.flag.AbstractFlag;
 import de.xaniox.heavyspleef.core.flag.InputParseException;
 import de.xaniox.heavyspleef.core.player.SpleefPlayer;
@@ -292,25 +291,8 @@ public abstract class ItemStackFlag extends AbstractFlag<ItemStack> {
 		return new MaterialData(material, data);
 	}
 
-	@SuppressWarnings("deprecation")
-	protected Material getMaterialByName(String str) throws InputParseException {
-		int id;
-
-		try {
-			// Try to parse the item id
-			id = Integer.parseInt(str);
-		} catch (Exception e) {
-			// Hmm, failed now we try to get the material by name
-			try {
-				str = str.toUpperCase();
-				id = ItemType.lookup(str).getID();
-			} catch (Exception e1) {
-				// Failed again, no suitable material found
-				throw new InputParseException("Invalid item material '" + str + "'\n" + HELP_STRING);
-			}
-		}
-
-		return Material.getMaterial(id);
+	protected Material getMaterialByName(String str) {
+		return Material.getMaterial(str);
 	}
 
 	@Override

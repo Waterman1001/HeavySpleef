@@ -64,7 +64,7 @@ import java.util.Map;
 public class FlagSplegg extends BaseFlag {
 
 	private static final String TNT_METADATA_KEY = "heavyspleef_tnt";
-	private static final Material SPLEGG_LAUNCHER_MATERIAL = Material.IRON_SPADE;
+	private static final Material SPLEGG_LAUNCHER_MATERIAL = Material.IRON_SHOVEL;
 	private static Listener listener;
 	
 	@Inject

@@ -78,7 +78,12 @@ public class SpleefPlayer implements CommandSender {
 	public String getName() {
 		return bukkitPlayerRef.get() != null ? getBukkitPlayer().getName() : name;
 	}
-	
+
+	@Override
+	public Spigot spigot() {
+		return null;
+	}
+
 	public UUID getUniqueId() {
 		validateOnline();
 		return getBukkitPlayer().getUniqueId();
@@ -230,5 +235,17 @@ public class SpleefPlayer implements CommandSender {
 		validateOnline();
 		getBukkitPlayer().sendMessage(messages);
 	}
-	
+
+	@Override
+	public void sendMessage(UUID uuid, String s) {
+		validateOnline();
+		getBukkitPlayer().sendMessage(s);
+	}
+
+	@Override
+	public void sendMessage(UUID uuid, String... strings) {
+		validateOnline();
+		getBukkitPlayer().sendMessage(strings);
+	}
+
 }

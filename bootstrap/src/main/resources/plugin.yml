@@ -6,6 +6,8 @@ description: ${project.parent.description}
 author: xaniox
 website: ${project.parent.url}
 
+api-version: 1.17
+
 main: ${main.class}
 
 depend: [WorldEdit]

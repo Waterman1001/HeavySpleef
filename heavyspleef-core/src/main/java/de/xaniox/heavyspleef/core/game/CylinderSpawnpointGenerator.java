@@ -17,8 +17,8 @@
  */
 package de.xaniox.heavyspleef.core.game;
 
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.Vector2D;
+import com.sk89q.worldedit.math.Vector2;
+import com.sk89q.worldedit.math.Vector3;
 import com.sk89q.worldedit.regions.CylinderRegion;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -29,10 +29,10 @@ public class CylinderSpawnpointGenerator implements SpawnpointGenerator<Cylinder
 
 	@Override
 	public void generateSpawnpoints(CylinderRegion region, World world, List<Location> spawnpoints, int n) {
-		Vector center = region.getCenter();
-		Vector2D radius = region.getRadius();
-		int radx = radius.getBlockX();
-		int radz = radius.getBlockZ();
+		Vector3 center = region.getCenter();
+		Vector2 radius = region.getRadius();
+		double radx = radius.getX();
+		double radz = radius.getZ();
 		
 		int y = region.getMaximumY() + 1;
 		
